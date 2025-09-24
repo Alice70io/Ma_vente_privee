@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+    <meta name="googlebot" content="noindex, nofollow">
+    <title>Contenu Partagé</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #002FA7 0%, #001B5D 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #002FA7, #001B5D);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+        
+        .main-content {
+            padding: 40px;
+        }
+        
+        .search-section {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid #002FA7;
+        }
+        
+        .search-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        
+        .search-container input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+        
+        .search-container input:focus {
+            outline: none;
+            border-color: #002FA7;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(0, 47, 167, 0.1);
+        }
+        
+        .search-container button {
+            position: absolute;
+            right: 10px;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .search-container button:hover {
+            background: #ee5a52;
+            transform: scale(1.1);
+        }
+        
+        .search-results {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .search-highlight {
+            background: yellow;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        
+        .content-item {
+            background: white;
+            padding: 30px;
+            margin-bottom: 25px;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border-left: 4px solid #002FA7;
+        }
+        
+        .content-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+        }
+        
+        .content-item h2 {
+            color: #002FA7;
+            margin-bottom: 20px;
+            font-size: 1.6em;
+            font-weight: 600;
+        }
+        
+        .content-item p {
+            margin-bottom: 20px;
+            line-height: 1.8;
+            font-size: 1.05em;
+            text-align: justify;
+        }
+        
+        .content-item img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            margin-top: 20px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease;
+        }
+        
+        .content-item img:hover {
+            transform: scale(1.02);
+        }
+        
+        .no-content {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            padding: 60px 40px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        }
+        
+        .no-content::before {
+            content: "📖";
+            font-size: 3em;
+            display: block;
+            margin-bottom: 20px;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+            background: #f8f9fa;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+            }
+            
+            .header, .main-content {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .content-item {
+                padding: 20px;
+            }
+        }
+        
+        /* Animation de fondu pour l'entrée */
+        .content-item {
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .content-item:nth-child(1) { animation-delay: 0.1s; }
+        .content-item:nth-child(2) { animation-delay: 0.2s; }
+        .content-item:nth-child(3) { animation-delay: 0.3s; }
+        .content-item:nth-child(4) { animation-delay: 0.4s; }
+        .content-item:nth-child(5) { animation-delay: 0.5s; }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Contenu Partagé</h1>
+            <p>Découvrez le contenu qui a été partagé avec vous</p>
+        </div>
+        
+        <div class="main-content">
+            <!-- Barre de recherche -->
+            <div class="search-section">
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="🔍 Rechercher dans le contenu..." onkeyup="rechercherContenu()">
+                    <button onclick="viderRecherche()" id="clearBtn" style="display: none;">✕</button>
+                </div>
+                <div id="searchResults" class="search-results"></div>
+            </div>
+            
+            <div id="contentDisplay">
+                <!-- Le contenu sera inséré ici -->
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>✨ Page de lecture avec recherche avancée</p>
+        </div>
+    </div>
+    
+    <script>
+        // Données de contenu - REMPLACEZ par vos données réelles
+        let sharedContent = [
+            {
+                id: 1,
+                title: "Exemple de titre",
+                text: "Ceci est un exemple de texte qui apparaîtra sur votre page de lecture seule. Vous pouvez remplacer ce contenu par vos propres données.\n\nLes paragraphes sont séparés automatiquement et le texte est formaté de manière élégante.",
+                images: []
+            }
+        ];
+        
+        let contenuFiltre = [];
+        
+        function rechercherContenu() {
+            var terme = document.getElementById('searchInput').value.trim().toLowerCase();
+            var boutonVider = document.getElementById('clearBtn');
+            var resultatsDiv = document.getElementById('searchResults');
+            
+            // Afficher/cacher le bouton de vidage
+            if (terme.length > 0) {
+                boutonVider.style.display = 'block';
+            } else {
+                boutonVider.style.display = 'none';
+            }
+            
+            // Si pas de terme de recherche, afficher tout
+            if (terme.length === 0) {
+                contenuFiltre = sharedContent;
+                resultatsDiv.innerHTML = '';
+                displayContent();
+                return;
+            }
+            
+            // Filtrer le contenu
+            contenuFiltre = sharedContent.filter(function(item) {
+                var titreMatch = item.title && item.title.toLowerCase().includes(terme);
+                var texteMatch = item.text && item.text.toLowerCase().includes(terme);
+                return titreMatch || texteMatch;
+            });
+            
+            // Afficher les résultats
+            if (contenuFiltre.length === 0) {
+                resultatsDiv.innerHTML = '❌ Aucun résultat trouvé pour "' + escapeHtml(terme) + '"';
+                resultatsDiv.style.color = '#dc3545';
+            } else if (contenuFiltre.length === 1) {
+                resultatsDiv.innerHTML = '✅ 1 résultat trouvé pour "' + escapeHtml(terme) + '"';
+                resultatsDiv.style.color = '#28a745';
+            } else {
+                resultatsDiv.innerHTML = '✅ ' + contenuFiltre.length + ' résultats trouvés pour "' + escapeHtml(terme) + '"';
+                resultatsDiv.style.color = '#28a745';
+            }
+            
+            displayContent();
+        }
+        
+        function viderRecherche() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('clearBtn').style.display = 'none';
+            document.getElementById('searchResults').innerHTML = '';
+            contenuFiltre = sharedContent;
+            displayContent();
+        }
+        
+        function surligner(texte, terme) {
+            if (!terme || terme.length === 0) return texte;
+            
+            var regex = new RegExp('(' + terme.replace(/[.*+?^${}()|[\]\\]/g, '\\        @media (max-') + ')', 'gi');
+            return texte.replace(regex, '<span class="search-highlight">$1</span>');
+        }
+        
+        function displayContent() {
+            const contentDisplay = document.getElementById('contentDisplay');
+            const terme = document.getElementById('searchInput').value.trim().toLowerCase();
+            
+            // Utiliser le contenu filtré ou tout le contenu
+            const contenuAffiche = contenuFiltre.length >= 0 && document.getElementById('searchInput').value.trim() ? contenuFiltre : sharedContent;
+            
+            if (contenuAffiche.length === 0) {
+                if (terme.length > 0) {
+                    contentDisplay.innerHTML = `
+                        <div class="no-content">
+                            <h3>Aucun contenu trouvé</h3>
+                            <p>Aucun résultat ne correspond à votre recherche.</p>
+                        </div>
+                    `;
+                } else {
+                    contentDisplay.innerHTML = `
+                        <div class="no-content">
+                            <h3>Aucun contenu disponible</h3>
+                            <p>Il n'y a pas encore de contenu à afficher sur cette page.</p>
+                        </div>
+                    `;
+                }
+                return;
+            }
+            
+            contentDisplay.innerHTML = contenuAffiche.map(item => {
+                // Surligner les termes trouvés
+                const titreAffiche = item.title ? surligner(escapeHtml(item.title), terme) : '';
+                const texteAffiche = item.text ? surligner(escapeHtml(item.text), terme).replace(/\n/g, '<br>') : '';
+                
+                return `
+                    <div class="content-item">
+                        ${titreAffiche ? `<h2>${titreAffiche}</h2>` : ''}
+                        ${texteAffiche ? `<p>${texteAffiche}</p>` : ''}
+                        ${item.images && item.images.length > 0 ? 
+                            item.images.map(img => `<img src="${img}" alt="${item.title || 'Image'}" loading="lazy">`).join('') 
+                            : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        // Fonction pour mettre à jour le contenu (à appeler depuis l'extérieur)
+        function updateSharedContent(newContent) {
+            sharedContent = newContent;
+            contenuFiltre = sharedContent;
+            displayContent();
+        }
+        
+        // Initialisation
+        window.onload = function() {
+            contenuFiltre = sharedContent;
+            displayContent();
+            
+            // Animation d'entrée du conteneur
+            const container = document.querySelector('.container');
+            container.style.opacity = '0';
+            container.style.transform = 'translateY(30px)';
+            
+            setTimeout(() => {
+                container.style.transition = 'all 0.6s ease';
+                container.style.opacity = '1';
+                container.style.transform = 'translateY(0)';
+            }, 100);
+        };
+    </script>
+</body>
+</html>
