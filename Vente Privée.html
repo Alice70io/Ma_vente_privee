@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+    <meta name="googlebot" content="noindex, nofollow">
+    <title>Ma Page Privée</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #002FA7 0%, #001B5D 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #002FA7, #001B5D);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+        
+        .main-content {
+            padding: 40px;
+        }
+        
+        .add-section {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border: 2px dashed #ddd;
+            transition: all 0.3s ease;
+        }
+        
+        .add-section:hover {
+            border-color: #002FA7;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+        
+        input[type="text"], textarea, input[type="file"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+        
+        input[type="text"]:focus, textarea:focus {
+            outline: none;
+            border-color: #002FA7;
+            box-shadow: 0 0 0 3px rgba(0, 47, 167, 0.1);
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #002FA7, #001B5D);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 47, 167, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+        }
+        
+        .btn-secondary:hover {
+            box-shadow: 0 5px 15px rgba(108, 117, 125, 0.4);
+        }
+        
+        .content-item {
+            background: white;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .content-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .content-item h3 {
+            color: #002FA7;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+        
+        .content-item p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+        
+        .content-item img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-top: 15px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .delete-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        
+        .delete-btn:hover {
+            background: #ee5a52;
+            transform: scale(1.1);
+        }
+        
+        .delete-btn.confirmer {
+            background: #dc3545;
+            animation: pulse 0.5s infinite;
+        }
+        
+        .edit-btn {
+            position: absolute;
+            top: 15px;
+            right: 55px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        
+        .edit-btn:hover {
+            background: #218838;
+            transform: scale(1.1);
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .no-content {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            padding: 40px;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .modal h2 {
+            color: #002FA7;
+            margin-bottom: 20px;
+        }
+        
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
+        }
+        
+        .close:hover {
+            color: #000;
+        }
+        
+        .image-preview {
+            display: inline-block;
+            margin: 5px;
+            position: relative;
+        }
+        
+        .image-preview img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 5px;
+            border: 2px solid #ddd;
+        }
+        
+        .remove-img {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #28a745;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .notification.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .notification.error {
+            background: #dc3545;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+            }
+            
+            .header, .main-content {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .notification {
+                right: 10px;
+                left: 10px;
+                transform: translateY(-100%);
+            }
+            
+            .notification.show {
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔒 Ma Page Privée</h1>
+            <p>Ajoutez votre contenu personnel - Non indexée par les moteurs de recherche</p>
+        </div>
+        
+        <div class="main-content">
+            <div class="add-section">
+                <h2>➕ Ajouter du contenu</h2>
+                <div class="form-group">
+                    <label for="title">Titre :</label>
+                    <input type="text" id="title" name="title">
+                </div>
+                
+                <div class="form-group">
+                    <label for="text">Texte :</label>
+                    <textarea id="text" name="text" placeholder="Ajoutez votre texte ici..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="image">Images (plusieurs autorisées) :</label>
+                    <input type="file" id="image" name="image" accept="image/*" multiple>
+                    <small style="color: #666; font-size: 14px; display: block; margin-top: 5px;">
+                        Maintenez Ctrl (ou Cmd sur Mac) pour sélectionner plusieurs images
+                    </small>
+                </div>
+                
+                <button type="button" class="btn" onclick="ajouterContenu()">Ajouter le contenu</button>
+            </div>
+            
+            <div id="contentList">
+                <div class="no-content">
+                    📝 Aucun contenu ajouté pour le moment. Utilisez le formulaire ci-dessus pour commencer.
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal de modification -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="fermerModal()">&times;</span>
+            <h2>✏️ Modifier le contenu</h2>
+            <div class="form-group">
+                <label for="editTitle">Titre :</label>
+                <input type="text" id="editTitle" name="editTitle">
+            </div>
+            
+            <div class="form-group">
+                <label for="editText">Texte :</label>
+                <textarea id="editText" name="editText" placeholder="Modifiez votre texte ici..."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>Images actuelles :</label>
+                <div id="currentImages"></div>
+            </div>
+            
+            <div class="form-group">
+                <label for="editImage">Ajouter de nouvelles images :</label>
+                <input type="file" id="editImage" name="editImage" accept="image/*" multiple>
+                <small style="color: #666; font-size: 14px; display: block; margin-top: 5px;">
+                    Les nouvelles images s'ajouteront aux existantes
+                </small>
+            </div>
+            
+            <button type="button" class="btn" onclick="sauvegarderModif()">Sauvegarder</button>
+            <button type="button" class="btn btn-secondary" onclick="fermerModal()" style="margin-left: 10px;">Annuler</button>
+        </div>
+    </div>
+    
+    <!-- Notification -->
+    <div id="notification" class="notification"></div>
+    
+    <script>
+        var contenus = [];
+        var compteur = 1;
+        var enAttenteSuppr = {};
+        var idEnModification = null;
+        
+        function afficherNotification(message, type) {
+            var notif = document.getElementById('notification');
+            notif.textContent = message;
+            notif.className = 'notification' + (type ? ' ' + type : '');
+            notif.classList.add('show');
+            
+            setTimeout(function() {
+                notif.classList.remove('show');
+            }, 3000);
+        }
+        
+        function ajouterContenu() {
+            var titre = document.getElementById('title').value.trim();
+            var texte = document.getElementById('text').value.trim();
+            var fichiersImages = document.getElementById('image').files;
+            
+            if (!titre && !texte && fichiersImages.length === 0) {
+                afficherNotification('Veuillez ajouter au moins un titre, du texte ou une image.', 'error');
+                return;
+            }
+            
+            var item = {
+                id: compteur++,
+                titre: titre,
+                texte: texte,
+                images: []
+            };
+            
+            if (fichiersImages.length > 0) {
+                var imagesChargees = 0;
+                var totalImages = fichiersImages.length;
+                
+                for (var i = 0; i < fichiersImages.length; i++) {
+                    var lecteur = new FileReader();
+                    lecteur.onload = function(e) {
+                        item.images.push(e.target.result);
+                        imagesChargees++;
+                        
+                        if (imagesChargees === totalImages) {
+                            contenus.push(item);
+                            afficherContenus();
+                            viderFormulaire();
+                            if (totalImages === 1) {
+                                afficherNotification('Contenu ajouté avec 1 image !');
+                            } else {
+                                afficherNotification('Contenu ajouté avec ' + totalImages + ' images !');
+                            }
+                        }
+                    };
+                    lecteur.readAsDataURL(fichiersImages[i]);
+                }
+            } else {
+                contenus.push(item);
+                afficherContenus();
+                viderFormulaire();
+                afficherNotification('Contenu ajouté avec succès !');
+            }
+        }
+        
+        function modifierContenu(id) {
+            var item = null;
+            for (var i = 0; i < contenus.length; i++) {
+                if (contenus[i].id === id) {
+                    item = contenus[i];
+                    break;
+                }
+            }
+            
+            if (!item) return;
+            
+            idEnModification = id;
+            
+            document.getElementById('editTitle').value = item.titre || '';
+            document.getElementById('editText').value = item.texte || '';
+            
+            // Afficher les images actuelles
+            var divImages = document.getElementById('currentImages');
+            if (item.images && item.images.length > 0) {
+                var html = '';
+                for (var i = 0; i < item.images.length; i++) {
+                    html += '<div class="image-preview">';
+                    html += '<img src="' + item.images[i] + '">';
+                    html += '<button type="button" class="remove-img" onclick="supprimerImageModif(' + i + ')">×</button>';
+                    html += '</div>';
+                }
+                divImages.innerHTML = html;
+            } else {
+                divImages.innerHTML = '<p style="color: #666; font-style: italic;">Aucune image</p>';
+            }
+            
+            document.getElementById('editModal').style.display = 'block';
+        }
+        
+        function supprimerImageModif(index) {
+            var item = null;
+            for (var i = 0; i < contenus.length; i++) {
+                if (contenus[i].id === idEnModification) {
+                    item = contenus[i];
+                    break;
+                }
+            }
+            
+            if (item && item.images) {
+                item.images.splice(index, 1);
+                modifierContenu(idEnModification); // Rafraîchir l'affichage
+                afficherNotification('Image supprimée');
+            }
+        }
+        
+        function sauvegarderModif() {
+            var item = null;
+            for (var i = 0; i < contenus.length; i++) {
+                if (contenus[i].id === idEnModification) {
+                    item = contenus[i];
+                    break;
+                }
+            }
+            
+            if (!item) return;
+            
+            item.titre = document.getElementById('editTitle').value.trim();
+            item.texte = document.getElementById('editText').value.trim();
+            
+            var nouvellesImages = document.getElementById('editImage').files;
+            
+            if (nouvellesImages.length > 0) {
+                var imagesChargees = 0;
+                
+                for (var i = 0; i < nouvellesImages.length; i++) {
+                    var lecteur = new FileReader();
+                    lecteur.onload = function(e) {
+                        item.images.push(e.target.result);
+                        imagesChargees++;
+                        
+                        if (imagesChargees === nouvellesImages.length) {
+                            afficherContenus();
+                            fermerModal();
+                            afficherNotification('Modifications sauvegardées !');
+                        }
+                    };
+                    lecteur.readAsDataURL(nouvellesImages[i]);
+                }
+            } else {
+                afficherContenus();
+                fermerModal();
+                afficherNotification('Modifications sauvegardées !');
+            }
+        }
+        
+        function fermerModal() {
+            document.getElementById('editModal').style.display = 'none';
+            document.getElementById('editImage').value = '';
+            idEnModification = null;
+        }
+        
+        function demanderSuppression(id) {
+            if (enAttenteSuppr[id]) {
+                // Deuxième clic = confirmation
+                supprimerDefinitif(id);
+            } else {
+                // Premier clic = demande de confirmation
+                enAttenteSuppr[id] = true;
+                var boutons = document.querySelectorAll('[onclick*="demanderSuppression(' + id + ')"]');
+                if (boutons.length > 0) {
+                    boutons[0].classList.add('confirmer');
+                    boutons[0].title = 'Cliquez encore pour confirmer la suppression';
+                }
+                afficherNotification('Cliquez encore sur la croix pour confirmer la suppression', 'error');
+                
+                // Annuler après 5 secondes
+                setTimeout(function() {
+                    if (enAttenteSuppr[id]) {
+                        delete enAttenteSuppr[id];
+                        var boutons = document.querySelectorAll('[onclick*="demanderSuppression(' + id + ')"]');
+                        if (boutons.length > 0) {
+                            boutons[0].classList.remove('confirmer');
+                            boutons[0].title = 'Supprimer';
+                        }
+                    }
+                }, 5000);
+            }
+        }
+        
+        function supprimerDefinitif(id) {
+            for (var i = 0; i < contenus.length; i++) {
+                if (contenus[i].id == id) {
+                    contenus.splice(i, 1);
+                    delete enAttenteSuppr[id];
+                    afficherContenus();
+                    afficherNotification('Contenu supprimé !');
+                    return;
+                }
+            }
+        }
+        
+        function viderFormulaire() {
+            document.getElementById('title').value = '';
+            document.getElementById('text').value = '';
+            document.getElementById('image').value = '';
+        }
+        
+        function echapperHtml(texte) {
+            var div = document.createElement('div');
+            div.textContent = texte;
+            return div.innerHTML;
+        }
+        
+        function afficherContenus() {
+            var liste = document.getElementById('contentList');
+            
+            if (contenus.length === 0) {
+                liste.innerHTML = '<div class="no-content">📝 Aucun contenu ajouté pour le moment. Utilisez le formulaire ci-dessus pour commencer.</div>';
+                return;
+            }
+            
+            var html = '';
+            for (var i = 0; i < contenus.length; i++) {
+                var item = contenus[i];
+                html += '<div class="content-item">';
+                html += '<button class="delete-btn" onclick="demanderSuppression(' + item.id + ')" title="Supprimer">×</button>';
+                html += '<button class="edit-btn" onclick="modifierContenu(' + item.id + ')" title="Modifier">✏️</button>';
+                
+                if (item.titre) {
+                    html += '<h3>' + echapperHtml(item.titre) + '</h3>';
+                }
+                
+                if (item.texte) {
+                    html += '<p>' + echapperHtml(item.texte).replace(/\n/g, '<br>') + '</p>';
+                }
+                
+                if (item.images && item.images.length > 0) {
+                    for (var j = 0; j < item.images.length; j++) {
+                        html += '<img src="' + item.images[j] + '" alt="Image ajoutée">';
+                    }
+                }
+                
+                html += '</div>';
+            }
+            
+            liste.innerHTML = html;
+        }
+        
+        // Fermer la modal en cliquant en dehors
+        window.onclick = function(event) {
+            var modal = document.getElementById('editModal');
+            if (event.target === modal) {
+                fermerModal();
+            }
+        };
+        
+        // Animation d'entrée
+        window.onload = function() {
+            var container = document.querySelector('.container');
+            container.style.opacity = '0';
+            container.style.transform = 'translateY(30px)';
+            
+            setTimeout(function() {
+                container.style.transition = 'all 0.6s ease';
+                container.style.opacity = '1';
+                container.style.transform = 'translateY(0)';
+            }, 100);
+        };
+    </script>
+</body>
+</html>
